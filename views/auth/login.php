@@ -1,6 +1,6 @@
 <main class="auth">
     <h2 class="auth__heading"><?php echo $titulo?></h2>
-    <p class="auth__texto">Inicia Sesión en DevWebcamp</p>
+    <p class="auth__texto">Inicia Sesión en DevWebCamp</p>
 
     <form class="formulario" >
         <div class="formulario__campo">

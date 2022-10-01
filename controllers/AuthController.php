@@ -66,8 +66,12 @@ class AuthController {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $usuario->sincronizar($_POST);
+
             
-            $alertas = $usuario->validar_cuenta();
+            
+        $alertas = $usuario->validar_cuenta(); 
+
+           
 
             if(empty($alertas)) {
                 $existeUsuario = Usuario::where('email', $usuario->email);

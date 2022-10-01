@@ -2,9 +2,13 @@
 
 <main class="auth">
     <h2 class="auth__heading"><?php echo $titulo?></h2>
-    <p class="auth__texto">Inicia Sesión en DevWebcamp</p>
+    <p class="auth__texto">Inicia Sesión en DevWebCamp</p>
 
-    <form class="formulario" >
+    <?php
+    require_once __DIR__. '/../templates/alertas.php';
+    ?>
+
+    <form method="POST" action="/registro" class="formulario" >
         <div class="formulario__campo">
             <label class="formulario__label" for="nombre">Nombre</label>
             <input type="text" class="formulario__input" placeholder="Tu Nombre" id="nombre" name="nombre">
