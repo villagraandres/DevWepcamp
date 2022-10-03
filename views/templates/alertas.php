@@ -7,7 +7,7 @@ foreach($alertas as $key=>$alerta){
 
 ?>
 
-<div class="alerta alerta--error <?php echo $key?>"><?php echo $mensaje?></div>
+<div class="alerta alerta--<?php echo $key?>"><?php echo $mensaje?></div>
 
 
 <?php

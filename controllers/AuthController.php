@@ -8,8 +8,14 @@ use MVC\Router;
 
 class AuthController {
     public static function login(Router $router) {
-
+        $usuario=new Usuario();
         $alertas = [];
+        $estado=s($_GET['estado']  ?? '');
+        if($estado){    
+            $alertas=Usuario::setAlerta('exito','Password reestablecido correctamente');
+        }
+        
+
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
     
@@ -33,6 +39,13 @@ class AuthController {
                         $_SESSION['apellido'] = $usuario->apellido;
                         $_SESSION['email'] = $usuario->email;
                         $_SESSION['admin'] = $usuario->admin ?? null;
+
+                        //Redireccion
+                        if( $usuario->admin){
+                            header('Location: /dashboard');
+                        }else{
+                            header('Location: /finalizar-registro');
+                        }
                         
                     } else {
                         Usuario::setAlerta('error', 'Password Incorrecto');
@@ -92,10 +105,15 @@ class AuthController {
                     // Crear un nuevo usuario
                     $resultado =  $usuario->guardar();
 
+                   
+
                     // Enviar email
-                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
-                    $email->enviarConfirmacion();
+                     $email = new Email($usuario->email,$usuario->nombre,$usuario->token); 
                     
+
+
+                    $email->enviarConfirmacion();
+                     
 
                     if($resultado) {
                         header('Location: /mensaje');
@@ -108,8 +126,10 @@ class AuthController {
         $router->render('auth/registro', [
             'titulo' => 'Crea tu cuenta en DevWebcamp',
             'usuario' => $usuario, 
-            'alertas' => $alertas
-        ]);
+            'alertas' => $alertas,
+            'texto'=>'Registro de cuenta'
+           
+        ], false);
     }
 
     public static function olvide(Router $router) {
@@ -153,8 +173,9 @@ class AuthController {
         // Muestra la vista
         $router->render('auth/olvide', [
             'titulo' => 'Olvide mi Password',
-            'alertas' => $alertas
-        ]);
+            'alertas' => $alertas,
+            'texto'=>'Recuperar contraseña'
+        ],false);
     }
 
     public static function reestablecer(Router $router) {
@@ -177,6 +198,7 @@ class AuthController {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Añadir el nuevo password
+            
             $usuario->sincronizar($_POST);
 
             // Validar el password
@@ -194,7 +216,7 @@ class AuthController {
 
                 // Redireccionar
                 if($resultado) {
-                    header('Location: /');
+                    header('Location: /login?estado=1');
                 }
             }
         }
@@ -206,14 +228,15 @@ class AuthController {
             'titulo' => 'Reestablecer Password',
             'alertas' => $alertas,
             'token_valido' => $token_valido
-        ]);
+        ],false);
     }
 
     public static function mensaje(Router $router) {
 
         $router->render('auth/mensaje', [
-            'titulo' => 'Cuenta Creada Exitosamente'
-        ]);
+            'titulo' => 'Cuenta Creada Exitosamente',
+           
+        ],false,false);
     }
 
     public static function confirmar(Router $router) {
@@ -227,7 +250,7 @@ class AuthController {
 
         if(empty($usuario)) {
             // No se encontró un usuario con ese token
-            Usuario::setAlerta('error', 'Token No Válido');
+            Usuario::setAlerta('error', 'Token No Válido, la cuenta no se confirmo');
         } else {
             // Confirmar la cuenta
             $usuario->confirmado = 1;
@@ -237,7 +260,7 @@ class AuthController {
             // Guardar en la BD
             $usuario->guardar();
 
-            Usuario::setAlerta('exito', 'Cuenta Comprobada Correctamente');
+            Usuario::setAlerta('exito', 'Cuenta Comprobada Exitosamente,');
         }
 
      
@@ -245,6 +268,6 @@ class AuthController {
         $router->render('auth/confirmar', [
             'titulo' => 'Confirma tu cuenta DevWebcamp',
             'alertas' => Usuario::getAlertas()
-        ]);
+        ],false,false);
     }
 }
