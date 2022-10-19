@@ -32,19 +32,20 @@
 
     <div class="formulario__campo">
         <label for="tags_input" class="formulario__label">Areas de Experiencia (separadas por coma) </label>
-        <input type="text" class="formulario__input" id="tags_input" name="pais" placeholder="Ej. Node.js, PHP, JS, Mongo, TypeScript" >
+        <input type="text" class="formulario__input" id="tags_input"  placeholder="Ej. Node.js, PHP, JS, Mongo, TypeScript" >
 
 
-    <div id="tags" class="formulario__listado">
-        <input type="hidden" name="tags" value="<?php echo $ponente->tags ?? ''?>">
-    </div>
+     
+       <div id="tags" class="formulario__listado"> </div>
+    <input type="hidden" name="tags" value="<?php echo $ponente->tags ?? ''; ?>"> 
+
     </div>
 
     </fieldset>
 
     
 <fieldset class="formulario__fieldset">
-    <legend class="formulario__legend">Información Extra</legend>
+    <legend class="formulario__legend">Información Extra (URL)</legend>
 
     <div class="formulario__campo">
        <div class="formulario__contenedor-icono">
