@@ -9,6 +9,7 @@ use Controllers\EventosController;
 use Controllers\PonentesController;
 use Controllers\RegalosController;
 use Controllers\RegistradosController;
+use Controllers\ApiController;
 
 $router = new Router();
 
@@ -44,11 +45,19 @@ $router->get('/admin/ponentes', [PonentesController::class, 'index']);
 $router->get('/admin/ponentes/crear', [PonentesController::class, 'crear']);
 $router->post('/admin/ponentes/crear', [PonentesController::class, 'crear']);
 
+$router->get('/admin/ponentes/editar', [PonentesController::class, 'editar']);
+$router->post('/admin/ponentes/editar', [PonentesController::class, 'editar']);
+
+$router->post('/admin/ponentes/eliminar', [PonentesController::class, 'eliminar']);
+
 $router->get('/admin/eventos', [EventosController::class, 'index']);
 
 $router->get('/admin/registrados', [RegistradosController::class, 'index']);
 
 $router->get('/admin/regalos', [RegalosController::class, 'index']);
+
+
+$router->post('/api/eliminar', [ApiController::class, 'eliminar']);
 
 
 $router->comprobarRutas();
