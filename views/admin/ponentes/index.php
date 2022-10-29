@@ -7,7 +7,7 @@
     </a>
 </div>
 
-<div class="dasboard__contenedor">
+<div class="dashboard__contenedor">
     <?php if(!empty($ponentes)){?>
 
         <table class="table">
@@ -46,3 +46,8 @@
 
     <?php } ?>
 </div>
+
+<?php
+echo $paginacion;
+
+?>
